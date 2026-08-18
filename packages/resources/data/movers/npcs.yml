@@ -26,6 +26,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
     healHpPct: 5
     healPct: 20
@@ -54,6 +55,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 210
     key: MI_MAFL_LOSHA
@@ -80,6 +82,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 211
     key: MI_MAFL_BOBOKU
@@ -106,6 +109,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 212
     key: MI_MAFL_JURIA
@@ -132,6 +136,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 213
     key: MI_MAFL_LUI
@@ -158,6 +163,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 214
     key: MI_MAFL_MARCHE
@@ -184,6 +190,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 215
     key: MI_MASA_BULROX
@@ -210,6 +217,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 216
     key: MI_MASA_TINA
@@ -236,6 +244,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 217
     key: MI_MASA_KARIN
@@ -262,6 +271,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 218
     key: MI_MASA_MARTIN
@@ -288,6 +298,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 219
     key: MI_MASA_BILL
@@ -314,6 +325,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 201
     key: MI_DWARPET
@@ -340,6 +352,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 202
     key: MI_DWARPETMAS
@@ -366,6 +379,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 203
     key: MI_CROWNIBLIS
@@ -392,6 +406,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 204
     key: MI_CROWNSHADE
@@ -418,6 +433,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 221
     key: MI_NPC_STIMA
@@ -444,6 +460,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 222
     key: MI_NPC_PHACHAM
@@ -470,6 +487,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 205
     key: MI_CROWNBUBBLE
@@ -496,6 +514,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 220
     key: MI_NPC_RHINE
@@ -522,6 +541,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 223
     key: MI_MADA_ROOCKY
@@ -548,6 +568,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 224
     key: MI_MADA_OLLIEN
@@ -574,6 +595,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 225
     key: MI_MADA_HAVEN
@@ -600,6 +622,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 226
     key: MI_MADA_CHITLLER
@@ -626,6 +649,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 227
     key: MI_MADA_BOLPOR
@@ -652,6 +676,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 228
     key: MI_MADA_ALMANI
@@ -678,6 +703,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 229
     key: MI_MADA_ACHABEN
@@ -704,6 +730,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 230
     key: MI_MADA_ESHYLOP
@@ -730,6 +757,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 231
     key: MI_MADA_REMINE
@@ -756,6 +784,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 232
     key: MI_MADA_UNKNOWN
@@ -782,6 +811,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 233
     key: MI_MADA_AGENT
@@ -808,6 +838,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 235
     key: MI_MAMA_ANCIMYS
@@ -834,6 +865,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 234
     key: MI_MADA_GUARDIAN
@@ -860,6 +892,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 669
     key: MI_NPC_REWARD
@@ -886,6 +919,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 236
     key: MI_MAFL_SANTA
@@ -912,6 +946,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 237
     key: MI_MAFL_PRIST
@@ -938,6 +973,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 238
     key: MI_NPC_CHEETOS
@@ -964,6 +1000,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 239
     key: MI_NPC_COLABEAR
@@ -990,6 +1027,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 753
     key: MI_DU_METEONYKER2
@@ -1016,6 +1054,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 5
     belligerence: 12
   - id: 720
     key: MI_PET_LAWOLF
@@ -1042,6 +1081,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 721
     key: MI_PET_AIBATT
@@ -1068,6 +1108,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 722
     key: MI_PET_LEYENA
@@ -1094,6 +1135,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 723
     key: MI_PET_LUIA
@@ -1120,6 +1162,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 724
     key: MI_PET_CAT01
@@ -1146,6 +1189,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 725
     key: MI_PET_DOG01
@@ -1172,6 +1216,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 726
     key: MI_PET_SOCCERBALL
@@ -1198,6 +1243,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 727
     key: MI_PET_COLABEAR
@@ -1224,6 +1270,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 728
     key: MI_PET_PENGUIN
@@ -1250,6 +1297,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 729
     key: MI_PET_IGUANA
@@ -1276,6 +1324,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 730
     key: MI_PET_COBRA
@@ -1302,6 +1351,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 746
     key: MI_PET_FROG
@@ -1328,6 +1378,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 747
     key: MI_PET_HAMBURGER
@@ -1354,6 +1405,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 748
     key: MI_PET_TURTLE
@@ -1380,6 +1432,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 893
     key: MI_PET_CHICKEN
@@ -1406,6 +1459,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 894
     key: MI_PET_COW
@@ -1432,6 +1486,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 895
     key: MI_PET_DOG2
@@ -1458,6 +1513,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 896
     key: MI_PET_DRAGON
@@ -1484,6 +1540,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 916
     key: MI_PET_DRAGON1
@@ -1510,6 +1567,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 897
     key: MI_PET_HAMSTER
@@ -1536,6 +1594,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 898
     key: MI_PET_HORSE
@@ -1562,6 +1621,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 899
     key: MI_PET_MONKEY
@@ -1588,6 +1648,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 900
     key: MI_PET_PIG
@@ -1614,6 +1675,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 901
     key: MI_PET_RABBIT
@@ -1640,6 +1702,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 902
     key: MI_PET_SHEEP
@@ -1666,6 +1729,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 903
     key: MI_PET_TIGER
@@ -1692,6 +1756,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 165
     key: MI_BIGMUSCLE
@@ -1718,6 +1783,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 5
     belligerence: 11
     healHpPct: 5
     healPct: 20
@@ -1746,6 +1812,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 5
     belligerence: 11
     healHpPct: 10
     healPct: 30
@@ -1774,6 +1841,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 5
     belligerence: 11
     healHpPct: 10
     healPct: 30
@@ -1802,6 +1870,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
     healHpPct: 5
     healPct: 20
@@ -1830,6 +1899,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 731
     key: MI_PET_EGG
@@ -1856,6 +1926,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 732
     key: MI_PET_WHITETIGER01
@@ -1882,6 +1953,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 733
     key: MI_PET_WHITETIGER01_1
@@ -1908,6 +1980,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 884
     key: MI_PET_WHITETIGER01_2
@@ -1934,6 +2007,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 734
     key: MI_PET_BARBARYLION01
@@ -1960,6 +2034,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 735
     key: MI_PET_BARBARYLION01_1
@@ -1986,6 +2061,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 885
     key: MI_PET_BARBARYLION01_2
@@ -2012,6 +2088,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 736
     key: MI_PET_RABBIT02
@@ -2038,6 +2115,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 737
     key: MI_PET_RABBIT02_1
@@ -2064,6 +2142,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 886
     key: MI_PET_RABBIT02_2
@@ -2090,6 +2169,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 738
     key: MI_PET_DRAGON01
@@ -2116,6 +2196,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 739
     key: MI_PET_DRAGON01_1
@@ -2142,6 +2223,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 887
     key: MI_PET_DRAGON01_2
@@ -2168,6 +2250,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 740
     key: MI_PET_UNICORN01
@@ -2194,6 +2277,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 741
     key: MI_PET_UNICORN01_1
@@ -2220,6 +2304,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 888
     key: MI_PET_UNICORN01_2
@@ -2246,6 +2331,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 742
     key: MI_PET_NINEFOX01
@@ -2272,6 +2358,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 743
     key: MI_PET_NINEFOX01_1
@@ -2298,6 +2385,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 889
     key: MI_PET_NINEFOX01_2
@@ -2324,6 +2412,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 744
     key: MI_PET_EAGLE01
@@ -2350,6 +2439,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 745
     key: MI_PET_EAGLE01_1
@@ -2376,6 +2466,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 890
     key: MI_PET_EAGLE01_2
@@ -2402,6 +2493,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 875
     key: MI_MADA_REDROBEMAN
@@ -2428,6 +2520,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 876
     key: MI_MADA_REDROBEGIRL
@@ -2454,6 +2547,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 877
     key: MI_NPC_DEALER
@@ -2480,6 +2574,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 878
     key: MI_NPC_HAIR
@@ -2506,6 +2601,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 879
     key: MI_NPC_MAKEUP
@@ -2532,6 +2628,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 880
     key: MI_NPC_PETTAMER
@@ -2558,6 +2655,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 881
     key: MI_NPC_DANCER
@@ -2584,6 +2682,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 882
     key: MI_NPC_MISSFLYFF
@@ -2610,6 +2709,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 883
     key: MI_NPC_MRFLYFF
@@ -2636,6 +2736,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 891
     key: MI_NPC_PRIEST
@@ -2662,6 +2763,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 892
     key: MI_NPC_MISTBOY
@@ -2688,6 +2790,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 910
     key: MI_NPC_WAFORU
@@ -2714,6 +2817,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 913
     key: MI_NPC_COLLECT
@@ -2740,6 +2844,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 914
     key: MI_PET_CARDPUPPET1
@@ -2766,6 +2871,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 915
     key: MI_PET_MIA1
@@ -2792,6 +2898,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 920
     key: MI_EVENT04
@@ -2818,6 +2925,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
   - id: 921
     key: MI_NPC_TARGET
@@ -2844,6 +2952,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 1
   - id: 970
     key: MI_PET_YETI
@@ -2870,6 +2979,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 981
     key: MI_NPC_KNIGHT01
@@ -2896,6 +3006,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 982
     key: MI_NPC_KNIGHT02
@@ -2922,6 +3033,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 983
     key: MI_NPC_SECRETARY
@@ -2948,6 +3060,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 984
     key: MI_NPC_SNOWGIRL
@@ -2974,6 +3087,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 985
     key: MI_NPC_RAINBOWNPC01
@@ -3000,6 +3114,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 986
     key: MI_NPC_RAINBOWNPC02
@@ -3026,6 +3141,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 987
     key: MI_NPC_RAINBOWNPC03
@@ -3052,6 +3168,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 988
     key: MI_NPC_RAINBOWNPC04
@@ -3078,6 +3195,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 989
     key: MI_NPC_RAINBOWNPC05
@@ -3104,6 +3222,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 990
     key: MI_NPC_RAINBOWNPC06
@@ -3130,6 +3249,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 991
     key: MI_NPC_RAINBOWNPC07
@@ -3156,6 +3276,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 992
     key: MI_NPC_RAINBOWSTART
@@ -3182,6 +3303,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1020
     key: MI_NPC_MINIDOOR01
@@ -3208,6 +3330,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1022
     key: MI_MAFL_GUILDWAR01
@@ -3234,6 +3357,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1023
     key: MI_MAFL_GUILDWAR02
@@ -3260,6 +3384,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1024
     key: MI_MAFL_GUILDWAR03
@@ -3286,6 +3411,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1025
     key: MI_MAFL_GUILDWAR04
@@ -3312,6 +3438,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1026
     key: MI_MAFL_ARENA
@@ -3338,6 +3465,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1027
     key: MI_MAFL_MAYOR
@@ -3364,6 +3492,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1028
     key: MI_NPC_CHARLIE
@@ -3390,6 +3519,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1029
     key: MI_NPC_SNOWMAN01
@@ -3416,6 +3546,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1030
     key: MI_NPC_SNOWMAN02
@@ -3442,6 +3573,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1031
     key: MI_PET_BULLDOG
@@ -3468,6 +3600,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1032
     key: MI_PET_GHOST
@@ -3494,6 +3627,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1033
     key: MI_PET_HAETAE
@@ -3520,6 +3654,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1034
     key: MI_PET_OWL
@@ -3546,6 +3681,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1035
     key: MI_PET_RAGDOLL
@@ -3572,6 +3708,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1036
     key: MI_PET_ROBOT
@@ -3598,6 +3735,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1037
     key: MI_PET_BANG1
@@ -3624,6 +3762,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1038
     key: MI_PET_PANDA
@@ -3650,6 +3789,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1039
     key: MI_PET_TAIGA01
@@ -3676,6 +3816,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1040
     key: MI_PET_TAIGA02
@@ -3702,6 +3843,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1041
     key: MI_PET_TAIGA03
@@ -3728,6 +3870,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1090
     key: MI_MAHA_JANO
@@ -3754,6 +3897,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1092
     key: MI_MAHA_LUCA
@@ -3780,6 +3924,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1091
     key: MI_MAHA_VESPU
@@ -3806,6 +3951,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1093
     key: MI_MAHA_LASA
@@ -3832,6 +3978,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1094
     key: MI_MAHA_RYAN
@@ -3858,6 +4005,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1095
     key: MI_PET_PARROT
@@ -3884,6 +4032,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1096
     key: MI_MAFL_ETE
@@ -3910,6 +4059,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1097
     key: MI_MAFL_TONGE
@@ -3936,6 +4086,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1098
     key: MI_PET_ROBOT01
@@ -3962,6 +4113,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1099
     key: MI_MAFL_MISSVTN
@@ -3988,6 +4140,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1101
     key: MI_MAFL_TELEPORTER
@@ -4014,6 +4167,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1102
     key: MI_PET_RACCON
@@ -4040,6 +4194,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1103
     key: MI_NPC_GUILDHOUSE_DOOR01
@@ -4066,6 +4221,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1104
     key: MI_NPC_SELIA
@@ -4092,6 +4248,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1105
     key: MI_NPC_ICINIS
@@ -4118,6 +4275,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1119
     key: MI_MAFL_TELEPORTER_3VAT
@@ -4144,6 +4302,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1120
     key: MI_PET_SANTACLAUS
@@ -4170,6 +4329,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1121
     key: MI_PET_SNOWMAN02
@@ -4196,6 +4356,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1122
     key: MI_NPC_VALLOSIA
@@ -4222,6 +4383,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1123
     key: MI_NPC_ROLINE
@@ -4248,6 +4410,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1124
     key: MI_PET_RICAN
@@ -4274,6 +4437,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1149
     key: MI_PET_DESERTFOX
@@ -4300,6 +4464,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1150
     key: MI_PET_DOBERMAN
@@ -4326,6 +4491,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1151
     key: MI_PET_ICEQUEEN
@@ -4352,6 +4518,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1152
     key: MI_PET_WRONGKOALA
@@ -4378,6 +4545,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1153
     key: MI_NPC_LEPRECHAUN
@@ -4404,6 +4572,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1154
     key: MI_PET_CHESHIRECAT
@@ -4430,6 +4599,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1155
     key: MI_PET_WHITERABBIT
@@ -4456,6 +4626,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1156
     key: MI_PET_WHITETIGER02
@@ -4482,6 +4653,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1164
     key: MI_MaFl_Babario
@@ -4508,6 +4680,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1165
     key: MI_PET_SKEL01
@@ -4534,6 +4707,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1166
     key: MI_PET_MOCOMOCI
@@ -4560,6 +4734,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1167
     key: MI_PET_DANCER
@@ -4586,6 +4761,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1169
     key: MI_STATUE
@@ -4612,6 +4788,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1170
     key: MI_SPIRITTULA
@@ -4638,6 +4815,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1171
     key: MI_SPIRITUMTULA
@@ -4664,6 +4842,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1172
     key: MI_SPIRITOBNIS
@@ -4690,6 +4869,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1173
     key: MI_SPIRITBAGNIS
@@ -4716,6 +4896,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1174
     key: MI_BEGUARDIAN
@@ -4742,6 +4923,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1175
     key: MI_BEHEMOTH
@@ -4768,6 +4950,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 11
   - id: 1210
     key: MI_BEHESTATUE01
@@ -4794,6 +4977,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 12
   - id: 1183
     key: MI_NPCBULLSFESTIVAL
@@ -4820,6 +5004,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1185
     key: MI_MaEw_RUIDAN
@@ -4846,6 +5031,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1186
     key: MI_MaEw_HUNTRANG
@@ -4872,6 +5058,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1187
     key: MI_MaEw_MIORANG
@@ -4898,6 +5085,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1188
     key: MI_MaEw_MAWRANG
@@ -4924,6 +5112,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1189
     key: MI_MaEw_KANRANG
@@ -4950,6 +5139,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1190
     key: MI_MaEw_RALBADAN
@@ -4976,6 +5166,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1191
     key: MI_MaEw_RELGANTUS
@@ -5002,6 +5193,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1192
     key: MI_MaEw_MIRIUN
@@ -5028,6 +5220,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1193
     key: MI_MaEw_KARANG
@@ -5054,6 +5247,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1194
     key: MI_MaEw_KURANG
@@ -5080,6 +5274,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1195
     key: MI_MaEw_HEIRANG
@@ -5106,6 +5301,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1196
     key: MI_MaEw_ARANG
@@ -5132,6 +5328,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1197
     key: MI_MaEw_MAURANG
@@ -5158,6 +5355,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1198
     key: MI_MaEw_BATO
@@ -5184,6 +5382,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1199
     key: MI_MaEw_MEIALUN
@@ -5210,6 +5409,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1200
     key: MI_MaEw_HAWRANG
@@ -5236,6 +5436,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1201
     key: MI_MaEw_RUTAM
@@ -5262,6 +5463,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1202
     key: MI_MaEw_RAYA
@@ -5288,6 +5490,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1203
     key: MI_MaEw_HARLIE
@@ -5314,6 +5517,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1204
     key: MI_MaEw_RODELLA
@@ -5340,6 +5544,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1205
     key: MI_MaEw_EPIE
@@ -5366,6 +5571,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1206
     key: MI_MaEw_HURI
@@ -5392,6 +5598,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1207
     key: MI_MaEw_GELGA
@@ -5418,6 +5625,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1208
     key: MI_MaEw_RUOBORU
@@ -5444,6 +5652,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1212
     key: MI_MaEw_CHEIRNAG
@@ -5470,6 +5679,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1214
     key: MI_MaEw_CARL
@@ -5496,6 +5706,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1216
     key: MI_MaEw_ISILIS
@@ -5522,6 +5733,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1217
     key: MI_MaEw_ROMAIN
@@ -5548,6 +5760,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1215
     key: MI_MaEw_BRANKA
@@ -5574,6 +5787,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1213
     key: MI_MaEw_EMBLUM
@@ -5600,6 +5814,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1211
     key: MI_MaFl_ROMINA
@@ -5626,6 +5841,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1220
     key: MI_PET_SMELTPIYO
@@ -5652,6 +5868,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1221
     key: MI_PET_SMELTUDI
@@ -5678,6 +5895,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1222
     key: MI_PET_SHEEP1
@@ -5704,6 +5922,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1274
     key: MI_PET_SMELTUDI01
@@ -5730,6 +5949,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1275
     key: MI_MaEw_MEWRANG
@@ -5756,6 +5976,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1280
     key: MI_NPCDEMIAN
@@ -5782,6 +6003,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1281
     key: MI_PET_CHAMELEON
@@ -5808,6 +6030,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1282
     key: MI_LIGHT
@@ -5834,6 +6057,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1283
     key: MI_DARK
@@ -5860,6 +6084,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1284
     key: MI_MaSa_ROA
@@ -5886,6 +6111,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1285
     key: MI_MaEw_TROY
@@ -5912,6 +6138,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1303
     key: MI_NPC_ROMERO
@@ -5938,6 +6165,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1286
     key: MI_MaFl_GUILDHOUSE_DOOR_01
@@ -5964,6 +6192,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1287
     key: MI_MaFl_GUILDHOUSE_DOOR_02
@@ -5990,6 +6219,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1288
     key: MI_MaFl_GUILDHOUSE_DOOR_03
@@ -6016,6 +6246,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1289
     key: MI_MaFl_GUILDHOUSE_DOOR_04
@@ -6042,6 +6273,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1290
     key: MI_MaFl_GUILDHOUSE_DOOR_05
@@ -6068,6 +6300,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1291
     key: MI_MaSa_GUILDHOUSE_DOOR_01
@@ -6094,6 +6327,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1292
     key: MI_MaSa_GUILDHOUSE_DOOR_02
@@ -6120,6 +6354,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1293
     key: MI_MaSa_GUILDHOUSE_DOOR_03
@@ -6146,6 +6381,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1294
     key: MI_MaSa_GUILDHOUSE_DOOR_04
@@ -6172,6 +6408,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1295
     key: MI_MaSa_GUILDHOUSE_DOOR_05
@@ -6198,6 +6435,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1296
     key: MI_MaSa_GUILDHOUSE_DOOR_06
@@ -6224,6 +6462,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1297
     key: MI_MaSa_GUILDHOUSE_DOOR_07
@@ -6250,6 +6489,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1298
     key: MI_MaSa_GUILDHOUSE_DOOR_08
@@ -6276,6 +6516,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1299
     key: MI_MaSa_GUILDHOUSE_DOOR_09
@@ -6302,6 +6543,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1300
     key: MI_MaEw_GUILDHOUSE_DOOR_01
@@ -6328,6 +6570,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1301
     key: MI_MaEw_GUILDHOUSE_DOOR_02
@@ -6354,6 +6597,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1302
     key: MI_MaEw_GUILDHOUSE_DOOR_03
@@ -6380,6 +6624,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1304
     key: MI_NPC_FRANKENSTEIN
@@ -6406,6 +6651,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1305
     key: MI_MaFl_GUILDHOUSE_NOTICE_01
@@ -6432,6 +6678,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1306
     key: MI_MaFl_GUILDHOUSE_NOTICE_02
@@ -6458,6 +6705,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1307
     key: MI_MaFl_GUILDHOUSE_NOTICE_03
@@ -6484,6 +6732,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1308
     key: MI_MaFl_GUILDHOUSE_NOTICE_04
@@ -6510,6 +6759,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1309
     key: MI_MaFl_GUILDHOUSE_NOTICE_05
@@ -6536,6 +6786,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1310
     key: MI_MaSa_GUILDHOUSE_NOTICE_01
@@ -6562,6 +6813,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1311
     key: MI_MaSa_GUILDHOUSE_NOTICE_02
@@ -6588,6 +6840,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1312
     key: MI_MaSa_GUILDHOUSE_NOTICE_03
@@ -6614,6 +6867,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1313
     key: MI_MaSa_GUILDHOUSE_NOTICE_04
@@ -6640,6 +6894,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1314
     key: MI_MaSa_GUILDHOUSE_NOTICE_05
@@ -6666,6 +6921,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1315
     key: MI_MaSa_GUILDHOUSE_NOTICE_06
@@ -6692,6 +6948,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1316
     key: MI_MaSa_GUILDHOUSE_NOTICE_07
@@ -6718,6 +6975,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1317
     key: MI_MaSa_GUILDHOUSE_NOTICE_08
@@ -6744,6 +7002,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1318
     key: MI_MaSa_GUILDHOUSE_NOTICE_09
@@ -6770,6 +7029,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1319
     key: MI_MaEw_GUILDHOUSE_NOTICE_01
@@ -6796,6 +7056,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1320
     key: MI_MaEw_GUILDHOUSE_NOTICE_02
@@ -6822,6 +7083,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1321
     key: MI_MaEw_GUILDHOUSE_NOTICE_03
@@ -6848,6 +7110,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1322
     key: MI_BUFFPONG
@@ -6874,6 +7137,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1325
     key: MI_PET_LITTLEZOMBIE
@@ -6900,6 +7164,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1326
     key: MI_GUILD_DOOR
@@ -6926,6 +7191,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1327
     key: MI_NPC_BROOKS
@@ -6952,6 +7218,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1328
     key: MI_NPC_ATMA
@@ -6978,6 +7245,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1329
     key: MI_NPC_JAPCHANGE
@@ -7004,6 +7272,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1332
     key: MI_MIDDLE_GUILDHOUSE_DOOR_01
@@ -7030,6 +7299,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1333
     key: MI_MIDDLE_GUILDHOUSE_DOOR_02
@@ -7056,6 +7326,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1334
     key: MI_MIDDLE_GUILDHOUSE_DOOR_03
@@ -7082,6 +7353,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1336
     key: MI_PET_REDPAANG
@@ -7108,6 +7380,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1337
     key: MI_MaEw_RUKAS
@@ -7134,6 +7407,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1338
     key: MI_MaEw_PiINANOCO
@@ -7160,6 +7434,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1339
     key: MI_MaEw_RAUNDAS
@@ -7186,6 +7461,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1340
     key: MI_BASILISK
@@ -7212,6 +7488,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 12
   - id: 1342
     key: MI_RUGALHEAT02
@@ -7238,6 +7515,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1343
     key: MI_RUGALKUMA
@@ -7264,6 +7542,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1345
     key: MI_RUGALRIMA
@@ -7290,6 +7569,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1346
     key: MI_RUGALWIND02
@@ -7316,6 +7596,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1347
     key: MI_KALGASAKIN01
@@ -7342,6 +7623,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1348
     key: MI_KALGASBABY01
@@ -7368,6 +7650,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1349
     key: MI_KALGASBALT01
@@ -7394,6 +7677,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1350
     key: MI_KALGASFLY01
@@ -7420,6 +7704,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1351
     key: MI_KALGASKUMA01
@@ -7446,6 +7731,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1352
     key: MI_KALGASLESSER01
@@ -7472,6 +7758,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1353
     key: MI_KALGASRIMA01
@@ -7498,6 +7785,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1354
     key: MI_KALGASBOSS
@@ -7524,6 +7812,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
   - id: 1357
     key: MI_MaEw_IDELRUNA
@@ -7550,6 +7839,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1358
     key: MI_MaEw_GIGAKA
@@ -7576,6 +7866,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1374
     key: MI_COLODIEOPNIS
@@ -7602,6 +7893,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1377
     key: MI_COLOCLOCKWORK
@@ -7628,6 +7920,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
     healHpPct: 5
     healPct: 20
@@ -7656,6 +7949,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 11
   - id: 1387
     key: MI_COLOKALGAS
@@ -7682,6 +7976,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1389
     key: MI_PET_REDSNOWMAN
@@ -7708,6 +8003,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1406
     key: MI_COLODIEOPNIS_1
@@ -7734,6 +8030,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1409
     key: MI_COLOCLOCKWORK_1
@@ -7760,6 +8057,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
     healHpPct: 5
     healPct: 20
@@ -7788,6 +8086,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 11
   - id: 1419
     key: MI_COLOKALGAS_1
@@ -7814,6 +8113,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1427
     key: MI_PET_SNOWMAN01
@@ -7840,6 +8140,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1428
     key: MI_PET_CHRISTMASFAIRY
@@ -7866,6 +8167,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1429
     key: MI_PET_CHRISTMASDEER
@@ -7892,6 +8194,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1434
     key: MI_PET_KIMPD
@@ -7918,6 +8221,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1435
     key: MI_NPC_KIMPD
@@ -7944,6 +8248,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1437
     key: MI_PET_CUTEBEAR
@@ -7970,6 +8275,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1438
     key: MI_PET_SMELTCOBI
@@ -7996,6 +8302,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1439
     key: MI_PET_SMELTPIERCE
@@ -8022,6 +8329,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1441
     key: MI_PET_NEWYEARRABBIT
@@ -8048,6 +8356,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1442
     key: MI_MAFL_DONATION
@@ -8074,6 +8383,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1443
     key: MI_PET_DEVILTOY
@@ -8100,6 +8410,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1444
     key: MI_PET_TADDYBEAR
@@ -8126,6 +8437,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1452
     key: MI_SHIPHIPPOGRIPH
@@ -8152,6 +8464,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1445
     key: MI_SHIPHARPINEES
@@ -8178,6 +8491,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 11
   - id: 1459
     key: MI_DREAMQEEN01
@@ -8204,6 +8518,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
   - id: 1466
     key: MI_HERNSIREN01
@@ -8230,6 +8545,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1467
     key: MI_HERNKRAKEN01
@@ -8256,6 +8572,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
   - id: 1475
     key: MI_SHIPHIPPOGRIPH_1
@@ -8282,6 +8599,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1468
     key: MI_SHIPHARPINEES_1
@@ -8308,6 +8626,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 11
   - id: 1482
     key: MI_DREAMQEEN01_1
@@ -8334,6 +8653,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
   - id: 1489
     key: MI_HERNSIREN01_1
@@ -8360,6 +8680,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 3
     belligerence: 12
   - id: 1490
     key: MI_HERNKRAKEN01_1
@@ -8386,6 +8707,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 7
     belligerence: 13
   - id: 1491
     key: MI_MAFL_TELEPORTER_2
@@ -8412,6 +8734,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1492
     key: MI_MASP_SANPRES
@@ -8438,6 +8761,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1493
     key: MI_MAHE_RAELRA
@@ -8464,6 +8788,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1494
     key: MI_NPC_FLAME
@@ -8490,6 +8815,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1495
     key: MI_NPC_REONAN
@@ -8516,6 +8842,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1496
     key: MI_NPC_AINHER
@@ -8542,6 +8869,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1497
     key: MI_NPC_ELLAIN
@@ -8568,6 +8896,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1498
     key: MI_NPC_HENDEL
@@ -8594,6 +8923,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1499
     key: MI_NPC_SURY
@@ -8620,6 +8950,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1500
     key: MI_NPC_HAEL
@@ -8646,6 +8977,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1501
     key: MI_NPC_NERCO
@@ -8672,6 +9004,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1502
     key: MI_NPC_REODOS
@@ -8698,6 +9031,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1503
     key: MI_NPC_ZORO
@@ -8724,6 +9058,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1509
     key: MI_NPC_DRICO
@@ -8750,6 +9085,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1505
     key: MI_EVENT_FWCMONSTER
@@ -8776,6 +9112,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 4
     belligerence: 12
   - id: 1506
     key: MI_PET_GPOTATO
@@ -8802,6 +9139,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1507
     key: MI_NPC_FWCENTER
@@ -8828,6 +9166,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1508
     key: MI_PET_BABYKARGO
@@ -8854,6 +9193,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1510
     key: MI_PET_MATRYOSHKA
@@ -8880,6 +9220,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1511
     key: MI_NPC_SHAIN
@@ -8906,6 +9247,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1512
     key: MI_NPC_RANGPANG
@@ -8932,6 +9274,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1513
     key: MI_NPC_PONEANG
@@ -8958,6 +9301,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1514
     key: MI_NPC_REONG
@@ -8984,6 +9328,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1515
     key: MI_NPC_TAMTAM
@@ -9010,6 +9355,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1516
     key: MI_NPC_RANGGO
@@ -9036,6 +9382,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1517
     key: MI_NPC_TOTO
@@ -9062,6 +9409,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1518
     key: MI_NPC_SEBRANCE
@@ -9088,6 +9436,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1519
     key: MI_NPC_DONJOBANNI
@@ -9114,6 +9463,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1520
     key: MI_NPC_MORDOLRIN
@@ -9140,6 +9490,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1521
     key: MI_NPC_JARCOBA
@@ -9166,6 +9517,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1522
     key: MI_NPC_MONEYJOBA
@@ -9192,6 +9544,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1523
     key: MI_NPC_GIVEMONEY
@@ -9218,6 +9571,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1529
     key: MI_MAFL_TIFA
@@ -9244,6 +9598,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1531
     key: MI_NPC_SHARON
@@ -9270,6 +9625,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1532
     key: MI_NPC_QueerCollector
@@ -9296,6 +9652,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1533
     key: MI_NPC_DRIAN
@@ -9322,6 +9679,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 9
     belligerence: 1
   - id: 1542
     key: MI_PET_BABYCAT
@@ -9348,6 +9706,7 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1
   - id: 1543
     key: MI_PET_BABYCAT_2
@@ -9374,4 +9733,5 @@ movers:
     raid: false
     attackable: false
     guard: false
+    rank: 1
     belligerence: 1

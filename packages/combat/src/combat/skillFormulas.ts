@@ -13,11 +13,11 @@
  */
 
 import type { Combatant, Rng, MeleeResult } from './formulas';
-import { calcDefense, getDamageMultiplier } from './formulas';
+import { applyDpc, calcDefense, getDamageMultiplier } from './formulas';
 import { DST } from '@flyff/entities';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
-  AF_GENERIC, AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1,
+  AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1,
 } from './tables';
 
 /**
@@ -269,7 +269,12 @@ export function resolveSkillCast(input: SkillCastInputs): SkillCastResult {
   const ext = skill.exeTarget ?? 0;
   const isMagic = ext === 14; // EXT_MAGICATKSHOT
 
-  let atkFlags = AF_GENERIC | (isMagic ? AF_MAGICSKILL : AF_MELEESKILL);
+  // GetPostCalcType (AttackArbiter.cpp:434-450) routes on the flags: AF_MAGICSKILL
+  // -> POSTCALC_MAGICSKILL, AF_GENERIC -> POSTCALC_GENERIC, everything else falls
+  // through to POSTCALC_DPC. `Ctrl.cpp:1024-1031` sets ONLY AF_MELEESKILL or
+  // AF_MAGICSKILL on a skill attack -- never AF_GENERIC -- so a melee skill lands
+  // on the DPC path. We previously OR'd AF_GENERIC in, which sent it to GENERIC.
+  let atkFlags = isMagic ? AF_MAGICSKILL : AF_MELEESKILL;
 
   const power = isMagic
     ? getMagicSkillPower(attacker, skill, level)
@@ -293,14 +298,21 @@ export function resolveSkillCast(input: SkillCastInputs): SkillCastResult {
   // Skills never crit — C++ IsCriticalAttack() returns FALSE for skill attacks
   // (MoverAttack.cpp:800: `if (IsSkillAttack(dwAtkFlags)) return FALSE`).
 
-  // Standard defense path. Magic uses CalcDefense too (docs #4: nDEF =
-  // defender.CalcDefense), then PostCalcMagicSkill applies magic factor.
-  const nDEF = calcDefense(defender);
+  // Standard defense path. Magic skills go through PostCalcMagicSkill
+  // (POSTCALC_MAGICSKILL); melee skills go through `ApplyDPC` (POSTCALC_DPC),
+  // which is `nATK - CalcDefense` clamped at 0 -- plus the `CanIgnoreDEF` bypass
+  // for Asalraalaikum / Hit of Penya, and the crit block that `IsSkillAttack`
+  // always skips. Passing `rng` matches C++ `CalcDefense(pInfo)` randomizing the
+  // equip-DEF roll per hit, exactly as the generic melee path does.
   let nDamage: number;
   if (isMagic) {
-    nDamage = postCalcMagicSkill(nATK, defender, nDEF, skill.element ?? 0);
+    nDamage = postCalcMagicSkill(nATK, defender, calcDefense(defender), skill.element ?? 0);
   } else {
-    nDamage = Math.max(0, nATK - nDEF);
+    const dpc = applyDpc({
+      attacker, defender, rng, nATK, atkFlags, skillId: skill.id, chargeLevel: 0,
+    });
+    nDamage = dpc.damage;
+    atkFlags = dpc.atkFlags;
   }
 
   // GetDamageMultiplier -- shared `CalcDamage` tail (docs #4): PvP 0.60 + the

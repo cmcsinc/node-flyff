@@ -172,7 +172,10 @@ describe('resolveSkillCast', () => {
     assert.equal(result.damage, 39 - 3, 'min damage path');
     assert.equal(result.atkFlags & AF_MELEESKILL, AF_MELEESKILL, 'AF_MELEESKILL set');
     assert.equal(result.atkFlags & AF_MAGICSKILL, 0, 'AF_MAGICSKILL not set');
-    assert.equal(result.atkFlags & AF_GENERIC, AF_GENERIC, 'AF_GENERIC base');
+    // `Ctrl.cpp:1024-1031` sets ONLY AF_MELEESKILL/AF_MAGICSKILL on a skill
+    // attack -- never AF_GENERIC. Its absence is what routes a melee skill to
+    // POSTCALC_DPC (`GetPostCalcType`, AttackArbiter.cpp:434-450).
+    assert.equal(result.atkFlags & AF_GENERIC, 0, 'AF_GENERIC must be clear');
   });
 
   it('Clean Hit L1 with max rng hits the upper damage bound', async () => {

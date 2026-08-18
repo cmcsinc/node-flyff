@@ -16,7 +16,12 @@ import {
   maxHitPoint, maxManaPoint, maxFatiguePoint, standRecovery,
   type Combatant, type Rng,
 } from '../../src/combat/formulas';
-import { WT_MELEE_SWD, WT_RANGE_BOW, NO_PROP, AF_GENERIC, AF_MISS, AF_CRITICAL1, getJobProps } from '../../src/combat/tables';
+import {
+  WT_MELEE_SWD, WT_RANGE_BOW, WT_MELEE_YOYO, NO_PROP,
+  AF_GENERIC, AF_MISS, AF_CRITICAL1, AF_FLYING,
+  RANK_LOW, RANK_MIDBOSS, RANK_MATERIAL, RANK_SUPER,
+  getJobProps,
+} from '../../src/combat/tables';
 import { EMPTY_PARAM_VIEW, DST, ParamModel } from '@flyff/entities';
 
 const FIST = { min: 0, max: 0, type: WT_MELEE_SWD, atkSpeed: 0.4, option: 0, element: NO_PROP };
@@ -353,7 +358,7 @@ describe('combat resolveMelee', () => {
     // ints: hit=0, crit=0(<1 -> crit), block=50. Attacker L1 == defender L1 so
     // fMin=1.1/fMax=1.4. min 16 -> trunc(16*1.1)=17; range() returns lo=17.
     // DEF 1 -> 16.
-    const r = resolveMelee(player, aibatt, makeRng([0, 0, 50], 16));
+    const r = resolveMelee(player, aibatt, makeRng([0, 0, 99, 50], 16));
     assert.equal(r.hit, true);
     assert.equal(r.damage, 16);
     assert.equal(r.atkFlags & AF_CRITICAL1, AF_CRITICAL1);
@@ -363,7 +368,7 @@ describe('combat resolveMelee', () => {
     // tank(L30 player) vs aibatt(L1 npc): defender is NPC -> fMin=1.2.
     // getHitMinMax(tank).min = 1*2 + (15-12)*4.5 + 30*1.1 = 48.5 -> 48.
     // trunc(48*1.2)=57; DEF 1 -> 56. player->npc, nDelta<0 -> no cosine.
-    const r = resolveMelee(tank, aibatt, makeRng([0, 0, 50], 48));
+    const r = resolveMelee(tank, aibatt, makeRng([0, 0, 99, 50], 48));
     assert.equal(r.damage, 56);
   });
 
@@ -384,7 +389,7 @@ describe('combat resolveMelee', () => {
     const params = new ParamModel();
     params.setDestParam(DST.CRITICAL_BONUS, 100);
     const buffed: Combatant = { ...player, params };
-    const r = resolveMelee(buffed, aibatt, makeRng([0, 0, 50], 16));
+    const r = resolveMelee(buffed, aibatt, makeRng([0, 0, 99, 50], 16));
     assert.equal(r.damage, 34);
   });
 
@@ -394,7 +399,7 @@ describe('combat resolveMelee', () => {
     const params = new ParamModel();
     params.setDestParam(DST.CRITICAL_BONUS, -500);
     const nerfed: Combatant = { ...player, params };
-    const r = resolveMelee(nerfed, aibatt, makeRng([0, 0, 50], 16));
+    const r = resolveMelee(nerfed, aibatt, makeRng([0, 0, 99, 50], 16));
     assert.equal(r.damage, 0);
     assert.equal(r.atkFlags & AF_CRITICAL1, 0, 'zero damage clears the crit flag');
   });
@@ -471,6 +476,72 @@ describe('combat H1: NPC->player ATK boost (PostCalcDamage:462)', () => {
     const r = resolveMelee(player, pukepuke, makeRng([0, 99, 50], 16));
     assert.equal(r.hit, true);
     assert.equal(r.damage, 11);
+  });
+});
+
+describe('combat AF_FLYING knock-up (GetHitPower, MoverAttack.cpp:1462)', () => {
+  // ints order in the crit path: [hit, crit, fly, block]. The fly roll is drawn
+  // only when the knock-up guards pass -- otherwise `block` shifts left by one.
+  const YOYO = { ...BARE_HAND, type: WT_MELEE_YOYO };
+
+  it('crit + roll < 15 on a RANK_LOW mob -> AF_FLYING set', () => {
+    const mob: Combatant = { ...aibatt, rank: RANK_LOW };
+    const r = resolveMelee(player, mob, makeRng([0, 0, 14, 50], 16));
+    assert.equal(r.atkFlags & AF_CRITICAL1, AF_CRITICAL1);
+    assert.equal(r.atkFlags & AF_FLYING, AF_FLYING);
+  });
+
+  it('roll >= 15 -> no AF_FLYING (85% of crits do not launch)', () => {
+    const mob: Combatant = { ...aibatt, rank: RANK_LOW };
+    const r = resolveMelee(player, mob, makeRng([0, 0, 15, 50], 16));
+    assert.equal(r.atkFlags & AF_FLYING, 0);
+  });
+
+  it('a non-crit hit never rolls for knock-up', () => {
+    const mob: Combatant = { ...aibatt, rank: RANK_LOW };
+    // crit roll 99 -> no crit. The 14 would pass the fly roll if it were drawn;
+    // it is instead consumed as the block roll (14 < 95 -> no block).
+    const r = resolveMelee(player, mob, makeRng([0, 99, 14], 16));
+    assert.equal(r.atkFlags & AF_CRITICAL1, 0);
+    assert.equal(r.atkFlags & AF_FLYING, 0);
+  });
+
+  it('yoyo in the active hand blocks knock-up', () => {
+    const mob: Combatant = { ...aibatt, rank: RANK_LOW };
+    const yoyoPlayer: Combatant = { ...player, weapon: YOYO };
+    const r = resolveMelee(yoyoPlayer, mob, makeRng([0, 0, 14], 16));
+    assert.equal(r.atkFlags & AF_CRITICAL1, AF_CRITICAL1, 'still crits');
+    assert.equal(r.atkFlags & AF_FLYING, 0);
+  });
+
+  it('a player defender is never knocked up (__VER >= 9 guard)', () => {
+    const r = resolveMelee(tank, player, makeRng([0, 0, 14], 48));
+    assert.equal(r.atkFlags & AF_FLYING, 0);
+  });
+
+  it('RANK_SUPER / RANK_MATERIAL / RANK_MIDBOSS are exempt (CanFlyByAttack)', () => {
+    for (const rank of [RANK_SUPER, RANK_MATERIAL, RANK_MIDBOSS]) {
+      const mob: Combatant = { ...aibatt, rank };
+      const r = resolveMelee(player, mob, makeRng([0, 0, 14], 16));
+      assert.equal(r.atkFlags & AF_FLYING, 0, `rank ${rank} must not fly`);
+    }
+  });
+
+  it('an air mover (IsFlyingNPC) is exempt', () => {
+    const mob: Combatant = { ...aibatt, rank: RANK_LOW, flyable: true };
+    const r = resolveMelee(player, mob, makeRng([0, 0, 14], 16));
+    assert.equal(r.atkFlags & AF_FLYING, 0);
+  });
+
+  it('zero damage clears AF_FLYING along with AF_CRITICAL', () => {
+    const params = new ParamModel();
+    params.setDestParam(DST.CRITICAL_BONUS, -500); // fCriticalBonus floors at 0.1
+    const nerfed: Combatant = { ...player, params };
+    const mob: Combatant = { ...aibatt, rank: RANK_LOW };
+    const r = resolveMelee(nerfed, mob, makeRng([0, 0, 14, 50], 16));
+    assert.equal(r.damage, 0);
+    assert.equal(r.atkFlags & AF_FLYING, 0);
+    assert.equal(r.atkFlags & AF_CRITICAL1, 0);
   });
 });
 

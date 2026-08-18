@@ -215,6 +215,16 @@ export const MoverDefinitionSchema = z.object({
   guard: z.boolean().default(false),
 
   /**
+   * Raw `dwClass` rank from propMover.txt (`defineAttribute.h:184-194`):
+   * LOW=1, NORMAL=2, CAPTAIN=3, BOSS=4, MIDBOSS=5, MATERIAL=6, SUPER=7,
+   * GUARD=8, CITIZEN=9. 0 = unknown. Kept raw alongside {@link boss}/
+   * {@link guard} because `CMover::CanFlyByAttack` (`MoverAttack.cpp:141`)
+   * exempts SUPER/MATERIAL/MIDBOSS from crit knock-up -- a distinction the
+   * booleans collapse away.
+   */
+  rank: z.number().int().min(0).max(10).default(0),
+
+  /**
    * Aggressiveness -- C++ `m_dwBelligerence` from propMover.txt
    * (`defineAttribute.h:203-215`). The client's attack cursor is gated by
    * `CMover::IsAttackAbleNPC` (Mover.cpp:6572): `BELLI_PEACEFUL` (1) suppresses

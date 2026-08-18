@@ -287,6 +287,18 @@ export class CPlayer {
    */
   m_idParty: number = NULL_ID;
   /**
+   * `CMover::m_dwFlag` (`_Common/Mover.h`) -- one-shot mover flag bits (see
+   * `MVRF`). `CPlayer` does not extend `CMover` in this port, so the field is
+   * mirrored here. Only `MVRF.CRITICAL` is used: `GetCriticalProb`
+   * (`MoverAttack.cpp:697-707`) consumes + clears it on the next crit roll.
+   *
+   * ponytail: nothing arms it yet -- the producer is `CParty::DoUsePartySkill`
+   * `case ST_SPHERECIRCLE:` (`party.cpp:441-488`), which needs `m_nKindTroup`,
+   * party level/points, `m_idSetTarget`, `m_nModeTime[...]` and `IsNearPC`, none
+   * of which exist in `PartyManager`. The consumer side is faithful.
+   */
+  m_dwFlag: number = 0;
+  /**
    * Guild id this player belongs to (C++ `CMover::m_idGuild`), or {@link NULL_ID}
    * when guildless. The roster lives in `GuildManager`; this is the per-player
    * back-reference that the ADD_OBJ guild block, guild chat, and the NPC-script

@@ -106,12 +106,31 @@ export const WT_RANGE_BOW = 21;
 /** Broad "ranged" category (defineAttribute.h). `DoAttackRange` accepts this OR `WT_RANGE_BOW`. */
 export const WT_RANGE = 8;
 
+// --- Mover ranks (`dwClass`, defineAttribute.h:184-194) ----------------------
+export const RANK_LOW = 1;
+export const RANK_NORMAL = 2;
+export const RANK_CAPTAIN = 3;
+export const RANK_BOSS = 4;
+export const RANK_MIDBOSS = 5;
+export const RANK_MATERIAL = 6;
+export const RANK_SUPER = 7;
+export const RANK_GUARD = 8;
+export const RANK_CITIZEN = 9;
+
 // --- Attack types (`CalcATK` switch) -----------------------------------------
 export const ATK_GENERIC = 0;
 export const ATK_MELEESKILL = 1;
 export const ATK_MAGICSKILL = 2;
 export const ATK_MAGIC = 3;
 export const ATK_FORCE = 4;
+
+/** `MAX_CHARGE_LEVEL` (`_Common/DefineCommon.h:24`) -- full wand/bow charge. */
+export const MAX_CHARGE_LEVEL = 4;
+
+// --- Skills that bypass DEF entirely (`ATTACK_INFO::CanIgnoreDEF`,
+//     AttackArbiter.cpp:56-69) -----------------------------------------------
+export const SI_BIL_PST_ASALRAALAIKUM = 159;
+export const SI_JST_YOYO_HITOFPENYA = 212;
 
 /** Hit-rate clamps (`GetAttackResult`, MoverAttack.cpp:241). */
 export const MIN_HR = 20;

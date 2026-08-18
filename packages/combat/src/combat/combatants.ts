@@ -29,7 +29,7 @@ const BARE_EQUIP = { weapon: BARE_HAND, armorDef: 0, armorDefMax: 0, adjHitRate:
  * is supplied, equipped weapon/armor/jewelry fold in via `sumEquipStats`;
  * otherwise bare hands + 0 DEF.
  */
-export function playerCombatant(p: CPlayer, getItem?: ItemLookup): Combatant {
+export function playerCombatant(p: CPlayer, getItem?: ItemLookup, partyCritBonus?: number): Combatant {
   const eq = getItem ? sumEquipStats(p, getItem) : BARE_EQUIP;
   return {
     kind: 'player', level: p.m_nLevel, job: p.m_nJob,
@@ -44,6 +44,8 @@ export function playerCombatant(p: CPlayer, getItem?: ItemLookup): Combatant {
     adjHitRate: eq.adjHitRate,
     parry: eq.parry,
     params: p.m_params,
+    // One-shot party SphereCircle crit bonus, already consumed by the caller.
+    partyCritBonus,
   };
 }
 
@@ -57,5 +59,8 @@ export function moverCombatant(m: CMover): Combatant {
     npcResisMagic: 0, npcHR: m.m_nHR, npcER: m.m_nER, element: m.m_nElement,
     equipDef: 0, equipDefMax: 0, adjHitRate: 0, parry: 0,
     params: m.m_params,
+    // Defender-side knock-up gate inputs (`CanFlyByAttack`).
+    rank: m.m_dwClass,
+    flyable: m.m_bFlyable,
   };
 }

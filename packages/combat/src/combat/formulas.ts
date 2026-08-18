@@ -13,9 +13,12 @@
 
 import {
   ATK_SPEED_PLUS, elementFactor,
-  AF_MISS, AF_CRITICAL1, AF_CRITICAL, AF_FLYING, AF_BLOCKING, AF_GENERIC,
+  AF_MISS, AF_CRITICAL1, AF_CRITICAL, AF_FLYING, AF_BLOCKING, AF_GENERIC, AF_FORCE,
+  AF_MELEESKILL, AF_MAGICSKILL, MAX_CHARGE_LEVEL,
+  SI_BIL_PST_ASALRAALAIKUM, SI_JST_YOYO_HITOFPENYA,
   WT_MELEE_SWD, WT_MELEE_AXE, WT_MELEE_STICK, WT_MELEE_KNUCKLE,
   WT_MELEE_STAFF, WT_MAGIC_WAND, WT_MELEE_YOYO, WT_RANGE_BOW,
+  RANK_MIDBOSS, RANK_MATERIAL, RANK_SUPER,
   MIN_HR, MAX_HR,
 } from './tables';
 import { getJobProps } from '@flyff/entities';
@@ -86,10 +89,54 @@ export interface Combatant {
    * `DST_CHR_CHANCECRITICAL` (crit), etc. C++ `GetParam(dst, def)`.
    */
   readonly params: ParamView;
+  /**
+   * Defender-only: raw propMover `dwClass` rank (`defineAttribute.h:184-194`).
+   * Read by the crit knock-up gate `CanFlyByAttack` (`MoverAttack.cpp:141`),
+   * which exempts RANK_SUPER (7) / RANK_MATERIAL (6) / RANK_MIDBOSS (5).
+   * Player/absent = 0 (never exempt).
+   */
+  readonly rank?: number | undefined;
+  /**
+   * Defender-only: air mover (propMover `bFlying` -> `IsFlyingNPC()`). Flying
+   * movers can never be knocked up (`CanFlyByAttack` early-returns FALSE).
+   */
+  readonly flyable?: boolean | undefined;
+  /**
+   * Attacker-only: already-consumed party critical bonus, added flat to
+   * `getCriticalProb`. C++ `GetCriticalProb` (`MoverAttack.cpp:698-707`) does the
+   * `g_PartyMng` lookup inline and adds `pParty->m_nSizeofMember / 2` when the
+   * one-shot `MVRF_CRITICAL` flag is armed, then clears the flag. Here the
+   * lookup + clear happen in the service seam (`@flyff/combat` holds no
+   * `@flyff/party` import) and only the resulting integer arrives. Absent/0 = no
+   * bonus, which is also the steady state until a party-skill system ships.
+   */
+  readonly partyCritBonus?: number | undefined;
 }
 
 export interface MeleeResult {
   readonly hit: boolean;
+  readonly damage: number;
+  readonly atkFlags: number;
+}
+
+/** Inputs to {@link applyDpc} -- the POSTCALC_DPC sink (`ApplyDPC`). */
+export interface DpcInputs {
+  readonly attacker: Combatant;
+  readonly defender: Combatant;
+  /** Post-`CalcATK` attack power (element factor + DST_ATKPOWER already folded). */
+  readonly nATK: number;
+  /** Flags so far; `AF_CRITICAL`/`AF_FLYING` may be added by this call. */
+  readonly atkFlags: number;
+  readonly rng: Rng;
+  /** Skill id for `CanIgnoreDEF` (0 = not a skill attack). */
+  readonly skillId?: number | undefined;
+  /** `GetChargeLevel()` -- wand/bow charge, 0 for skills. */
+  readonly chargeLevel?: number | undefined;
+  /** Attacker act-state carries `OBJSTA_ATK4` (4th combo swing). */
+  readonly atk4?: boolean | undefined;
+}
+
+export interface DpcResult {
   readonly damage: number;
   readonly atkFlags: number;
 }
@@ -190,14 +237,23 @@ export function getParrying(c: Combatant): number {
   return Math.floor(c.dex * 0.5 + c.params.get(DST.PARRY, c.parry));
 }
 
-/** `GetCriticalProb` (MoverAttack.cpp:684) -- `(DEX/10) * job.fCritical`, then `GetParam(DST_CHR_CHANCECRITICAL, that)` as OVERRIDE. */
+/**
+ * `GetCriticalProb` (MoverAttack.cpp:684) -- `(DEX/10) * job.fCritical`, then
+ * `GetParam(DST_CHR_CHANCECRITICAL, that)` as OVERRIDE, then the one-shot party
+ * bonus.
+ */
 export function getCriticalProb(c: Combatant): number {
   // GetParam(dst, nProb): chg-override > adj + nProb > nProb -- the base roll is
   // the DEFAULT, so DST_CHR_CHANCECRITICAL replaces it, never adds. C++ also
   // clamps negatives to 0 (__JEFF_11).
   let nProb = Math.floor((c.dex / 10) * getJobProps(c.job).fCritical);
   nProb = c.params.get(DST.CHR_CHANCECRITICAL, nProb);
-  return nProb < 0 ? 0 : nProb;
+  if (nProb < 0) nProb = 0;
+  // Party SphereCircle bonus (MoverAttack.cpp:697-707): `+= m_nSizeofMember/2`
+  // when MVRF_CRITICAL is armed. Added AFTER the negative clamp and AFTER the
+  // DST override, so it stacks on top of a chg-override. The caller consumes
+  // the one-shot flag (`CombatService.takePartyCritBonus`).
+  return nProb + (c.partyCritBonus ?? 0);
 }
 
 /**
@@ -331,6 +387,30 @@ export function minusHP(currentHp: number, damage: number): { hp: number; dealt:
 }
 
 /**
+ * Knock-up eligibility -- the three guards around the 15% roll in `GetHitPower`
+ * (`MoverAttack.cpp:1464-1470`) folded together with `CMover::CanFlyByAttack`
+ * (`MoverAttack.cpp:141-155`).
+ *
+ * Blocked when: the attacker's active hand is a yoyo, the hit carries
+ * `AF_FORCE`, the defender is a player, the defender is an air mover
+ * (`IsFlyingNPC()`), or the defender's `dwClass` is RANK_SUPER (7) /
+ * RANK_MATERIAL (6) / RANK_MIDBOSS (5).
+ *
+ * ponytail: `CanFlyByAttack` also returns FALSE while the defender is already
+ *   in `OBJSTA_DMG_FLY_ALL` (no repeat knock-up mid-flight) and for a defender
+ *   whose ActMover `IsFly()`. Neither act-state exists server-side yet -- the
+ *   effect is that a mob already airborne can be re-launched.
+ */
+function canFlyByAttack(attacker: Combatant, defender: Combatant, atkFlags: number): boolean {
+  if (attacker.weapon.type === WT_MELEE_YOYO) return false;
+  if (atkFlags & AF_FORCE) return false;
+  if (defender.kind === 'player') return false;
+  if (defender.flyable) return false;
+  const rank = defender.rank ?? 0;
+  return rank !== RANK_SUPER && rank !== RANK_MATERIAL && rank !== RANK_MIDBOSS;
+}
+
+/**
  * `CAttackArbiter::OnDamageMsgW` melee path -- the v1 entry point.
  *
  * Flow: hit-roll -> (miss => AF_MISS) -> CalcATK (GetHitPower w/ crit + element)
@@ -348,10 +428,11 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
 
   // C3: crit is a PRE-ROLL min/max variance layer (`GetHitPower`,
   // MoverAttack.cpp:1429-1460), not a post-roll multiplier. The flat 2.3x/2.6x
-  // layer lives in `ApplyDPC` (MoverAttack.cpp:1645), whose only call site is
-  // the POSTCALC_DPC branch (AttackArbiter.cpp:476) -- generic melee sets
-  // AF_GENERIC (ActionMoverMsg.cpp:698) -> POSTCALC_GENERIC, so it never
-  // reaches it. Hence no *2.3 here.
+  // layer lives in `ApplyDPC` (MoverAttack.cpp:1645) -- reachable only from the
+  // POSTCALC_DPC branch (AttackArbiter.cpp:476), which needs an attack carrying
+  // neither AF_GENERIC nor AF_MAGICSKILL. Generic melee sets AF_GENERIC
+  // (ActionMoverMsg.cpp:698) -> POSTCALC_GENERIC, so THIS path never reaches it
+  // (melee skills and wand auto-attacks do -- see `applyDpc`). Hence no *2.3 here.
   if (rng.int(100) < getCriticalProb(attacker)) {
     atkFlags |= AF_CRITICAL1;
     let fMin = 1.1;
@@ -367,8 +448,12 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
     if (fCriticalBonus < 0.1) fCriticalBonus = 0.1;
     min = Math.trunc(min * fMin * fCriticalBonus);
     max = Math.trunc(max * fMax * fCriticalBonus);
-    // ponytail: AF_FLYING (15% roll, blocked for yoyo/AF_FORCE/player defender,
-    //   needs CanFlyByAttack()) not ported -- knockback model absent.
+    // AF_FLYING knock-up (`GetHitPower`, MoverAttack.cpp:1462-1480, live
+    // __VER >= 9 / __FLYBYATTACK0608 branch -- the pre-9 roll was 30). Rolled
+    // ONLY inside the crit branch, so a non-crit hit never knocks up.
+    if (canFlyByAttack(attacker, defender, atkFlags) && rng.int(100) < 15) {
+      atkFlags |= AF_FLYING;
+    }
   }
 
   const lo = Math.min(min, max);
@@ -420,9 +505,70 @@ export function resolveMelee(attacker: Combatant, defender: Combatant, rng: Rng)
     atkFlags &= ~(AF_CRITICAL | AF_FLYING);
     nDamage = 0;
   }
-  // ponytail: GetWeaponPlusDamage(nDamage) (enchant option bonus) added just
-  // before the zero-check in PostCalcGeneric -- enchant model absent.
+  // `nDamage += GetWeaponPlusDamage(nDamage)` sits here in PostCalcGeneric
+  // (MoverAttack.cpp:1526), but the v19 global sink (MoverAttack.cpp:117-138)
+  // is `return 0;` unconditionally -- enchant raises ATK now instead of paying
+  // out as an option value. Faithful port = add nothing. Not a missing feature.
   return { hit: true, damage: nDamage, atkFlags };
+}
+
+/**
+ * `CMover::ApplyDPC` (`MoverAttack.cpp:1645`) -- the POSTCALC_DPC damage sink.
+ * A **defender** method: `this` is the mover taking the hit.
+ *
+ * `GetPostCalcType` (`AttackArbiter.cpp:434-450`) routes here for every attack
+ * that carries neither `AF_MAGICSKILL` nor `AF_GENERIC` -- i.e. melee skills
+ * (`Ctrl.cpp:1024-1031` sets only `AF_MELEESKILL`) and bare-`AF_MAGIC` wand
+ * auto-attacks (`MoverActEvent.cpp:859`). Generic melee sets `AF_GENERIC` and
+ * goes to `PostCalcGeneric` instead, which is why `resolveMelee` never calls
+ * this.
+ *
+ * Verbatim shape:
+ *   1. `CanIgnoreDEF()` ? nATK : nATK - CalcDefense, clamped >= 0.
+ *   2. `IsCriticalAttack(defender, flags)` -- FALSE for any skill attack
+ *      (`MoverAttack.cpp:798-804`), so only the wand path can crit here.
+ *   3. Crit sets the FULL `AF_CRITICAL` mask (not just `AF_CRITICAL1`), then
+ *      `*2.6` + 50% fly roll when `OBJSTA_ATK4` or charge == MAX_CHARGE_LEVEL,
+ *      else `*2.3` + 30% fly roll. (Note the 15% in `GetHitPower` differs.)
+ *   4. `fCriticalBonus = 1 + DST_CRITICAL_BONUS/100`, floored at 0.1 (__JEFF_11).
+ *
+ * `CalcPropDamage` (`AttackArbiter.cpp:477-480`) is deliberately absent: it is
+ * `#if __VER < 13` and WORLDSERVER is `__VER 19` (`VersionCommon.h:4`), so it
+ * is not compiled. Adding it would be a divergence, not a missing feature.
+ */
+export function applyDpc(opts: DpcInputs): DpcResult {
+  const { attacker, defender, rng } = opts;
+  let atkFlags = opts.atkFlags;
+
+  let nDamage: number;
+  if (canIgnoreDef(atkFlags, opts.skillId ?? 0)) {
+    nDamage = opts.nATK;
+  } else {
+    nDamage = opts.nATK - calcDefense(defender, rng);
+  }
+  if (nDamage < 0) nDamage = 0;
+
+  // IsCriticalAttack (MoverAttack.cpp:798-804): skill attacks never crit.
+  const isSkill = (atkFlags & (AF_MELEESKILL | AF_MAGICSKILL)) !== 0;
+  if (!isSkill && rng.int(100) < getCriticalProb(attacker)) {
+    atkFlags |= AF_CRITICAL;
+    const maxCharge = opts.atk4 === true || (opts.chargeLevel ?? 0) === MAX_CHARGE_LEVEL;
+    const flyProb = maxCharge ? 50 : 30;
+    nDamage = Math.trunc(nDamage * (maxCharge ? 2.6 : 2.3));
+    if (canFlyByAttack(attacker, defender, atkFlags) && rng.int(100) < flyProb) {
+      atkFlags |= AF_FLYING;
+    }
+    let fCriticalBonus = 1 + attacker.params.get(DST.CRITICAL_BONUS, 0) / 100.0;
+    if (fCriticalBonus < 0.1) fCriticalBonus = 0.1;
+    nDamage = Math.trunc(nDamage * fCriticalBonus);
+  }
+  return { damage: nDamage, atkFlags };
+}
+
+/** `ATTACK_INFO::CanIgnoreDEF` (`AttackArbiter.cpp:56-69`). */
+function canIgnoreDef(atkFlags: number, skillId: number): boolean {
+  if (atkFlags & AF_FORCE) return true;
+  return skillId === SI_BIL_PST_ASALRAALAIKUM || skillId === SI_JST_YOYO_HITOFPENYA;
 }
 
 /** `GetBlockFactor` (MoverAttack.cpp:731) -- NPC defender branch. */

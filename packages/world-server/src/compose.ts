@@ -982,6 +982,10 @@ export async function compose(): Promise<WorldComposeResult> {
     partyExp: (killer, mover, baseExp): number | null => partyService.distributeExp(killer, mover, baseExp),
     // Pools co-party attackers' recorded damage into one share before the split.
     sameParty,
+    // Party SphereCircle crit bonus: `nProb += m_nSizeofMember / 2`
+    // (`GetCriticalProb`, `MoverAttack.cpp:698-707`). C++ does the `g_PartyMng`
+    // lookup inline; the seam keeps `@flyff/combat` free of a `@flyff/party` import.
+    partySize: (charId: number): number => partyManager.getByMember(charId)?.members.length ?? 0,
     // Campus reward + graduation on level-up (CCampusHelper::SetLevelUpReward).
     onLevelUp: (player): void => { campusLevelUpSlot.fn?.(player); },
     // HITTYPE_WAR -- `CMover::IsWarTarget` (`MoverAttack.cpp:2047`). Grants PvP

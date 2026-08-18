@@ -322,7 +322,10 @@ private pursue(m: CMover, now: number, dtMs: number): void {
     );
     this.deps.zoneManager.broadcastAround(
       target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS,
-      this.damage.build(target.m_idPlayer, { attackerObjid: m.m_idMover, hit: dealt, atkFlags: result.atkFlags }),
+      this.damage.build(target.m_idPlayer, {
+        attackerObjid: m.m_idMover, hit: dealt, atkFlags: result.atkFlags,
+        victimPos: target.m_vPos, victimAngle: target.m_fAngle,
+      }),
     );
     if (target.m_nHp <= 0) {
       this.deps.onPlayerDeath?.(target, m.m_idMover);

@@ -10,8 +10,8 @@
  * clients `IncHitPoint(-dwHit)` locally; the red monster bar updates purely
  * from this broadcast (`DPClient.cpp:1724 OnDamage`).
  *
- * Vicinity broadcast (zone peers). v1 never sets `AF_FLYING` (knock-up is
- * skill-driven), so the optional pos/angle tail is omitted.
+ * Vicinity broadcast (zone peers). The pos/angle tail is written only on a crit
+ * knock-up (`AF_FLYING`, set by `GetHitPower` at MoverAttack.cpp:1471).
  *
  * @module net/snapshot/damage.serializer
  */
@@ -25,6 +25,14 @@ export interface DamageFrame {
   readonly attackerObjid: number;
   readonly hit: number;
   readonly atkFlags: number;
+  /**
+   * Victim position + facing, appended only when `AF_FLYING` is set. C++
+   * `AddDamage` writes `pMover->GetPos()` / `GetAngle()` -- the *victim's*, not
+   * the attacker's; the client `SetPos`/`SetAngle`s from it before running its
+   * own `DoDamageFly` arc (`DPClient.cpp:1761`), so this is the launch origin.
+   */
+  readonly victimPos?: { readonly x: number; readonly y: number; readonly z: number } | undefined;
+  readonly victimAngle?: number | undefined;
 }
 
 export class DamageSerializer {
@@ -39,8 +47,9 @@ export class DamageSerializer {
     w.writeDword(f.hit);
     w.writeDword(f.atkFlags);
     if (f.atkFlags & AF_FLYING) {
-      // pos (3* float) + angle -- appended only on knock-up. v1 never hits this.
-      w.writeFloat(0).writeFloat(0).writeFloat(0).writeFloat(0);
+      const p = f.victimPos;
+      w.writeFloat(p?.x ?? 0).writeFloat(p?.y ?? 0).writeFloat(p?.z ?? 0);
+      w.writeFloat(f.victimAngle ?? 0);
     }
     return w.build();
   }

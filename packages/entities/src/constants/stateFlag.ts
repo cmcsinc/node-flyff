@@ -68,3 +68,15 @@ export const PARTS_BULLET = 25;
  * and no progression to grant.
  */
 export const FLIGHT_LV_MIN_LEVEL = 20;
+
+/**
+ * `CMover::m_dwFlag` bits (`_Common/MoverMsg.h:186`) -- a **separate** DWORD from
+ * {@link OBJSTAF}. Only the one-shot critical bonus is ported: `CParty::
+ * DoUsePartySkill` arms it under `case ST_SPHERECIRCLE:` (`party.cpp:462`/`:469`)
+ * and `GetCriticalProb` consumes + clears it on the very next crit roll
+ * (`MoverAttack.cpp:697-707`) -- whether or not that attack could even crit.
+ */
+export const MVRF = Object.freeze({
+  /** `MVRF_CRITICAL` -- next crit roll gains `partySize/2`. One-shot. */
+  CRITICAL: 0x00000002,
+} as const);

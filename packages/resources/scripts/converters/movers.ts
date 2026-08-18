@@ -135,6 +135,24 @@ function classifyType(dwAi: string): 'monster' | 'npc' | 'player' {
   return 'npc';
 }
 
+/**
+ * `dwClass` symbol -> numeric rank (`defineAttribute.h:184-194`). Kept as the
+ * raw value (not collapsed to boss/giant) because `CMover::CanFlyByAttack`
+ * (`MoverAttack.cpp:141`) discriminates RANK_SUPER/MATERIAL/MIDBOSS, which the
+ * boolean flags below throw away.
+ */
+const RANK_TEXT_TO_NUM: Record<string, number> = {
+  RANK_LOW: 1,
+  RANK_NORMAL: 2,
+  RANK_CAPTAIN: 3,
+  RANK_BOSS: 4,
+  RANK_MIDBOSS: 5,
+  RANK_MATERIAL: 6,
+  RANK_SUPER: 7,
+  RANK_GUARD: 8,
+  RANK_CITIZEN: 9,
+};
+
 /** dwClass rank -> boss/giant flags + type override. */
 function rank(dwClass: string): { boss: boolean; giant: boolean } {
   return {
@@ -182,6 +200,7 @@ function rowToMover(row: Row, id: number, name: string): Record<string, unknown>
     raid: false,
     attackable: type === 'monster' ? row.bKillable !== '0' : false,
     guard: row.dwClass === 'RANK_GUARD',
+    rank: RANK_TEXT_TO_NUM[row.dwClass] ?? 0,
     belligerence: BELLI_TEXT_TO_NUM[row.dwBelligerence] ?? 0,
   };
 }

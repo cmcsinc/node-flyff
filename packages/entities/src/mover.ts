@@ -110,6 +110,13 @@ export interface MoverSpawnSource {
    */
   readonly flyable?: boolean | undefined;
   /**
+   * Raw propMover `dwClass` rank (`defineAttribute.h:184-194`): LOW=1,
+   * NORMAL=2, CAPTAIN=3, BOSS=4, MIDBOSS=5, MATERIAL=6, SUPER=7, GUARD=8,
+   * CITIZEN=9. 0 = unknown. Read by `CanFlyByAttack` (`MoverAttack.cpp:141`),
+   * which exempts SUPER/MATERIAL/MIDBOSS from crit knock-up.
+   */
+  readonly rank?: number | undefined;
+  /**
    * C++ `m_dwBelligerence` (defineAttribute.h:203-215). 1 = BELLI_PEACEFUL
    * (suppresses client attack cursor); 11/12/13 = aggressive. 0 = unspecified.
    */
@@ -251,6 +258,24 @@ export class CMover {
    * (`CMover::IsAttackAbleNPC`, `Mover.cpp:6822-6825`).
    */
   m_bFlyable: boolean;
+  /**
+   * Raw propMover `dwClass` rank (`MoverProp::dwClass`). See {@link MoverSpawnDef.rank}.
+   * Consumed by the crit knock-up gate (`CMover::CanFlyByAttack`).
+   */
+  m_dwClass: number;
+  /**
+   * `CMover::m_dwFlag` (`_Common/Mover.h`) -- one-shot mover flag bits (see
+   * `MVRF`). Only `MVRF.CRITICAL` is ported: the party SphereCircle skill arms
+   * it and the next crit roll consumes it.
+   *
+   * ponytail: nothing arms it yet. The producer is `CParty::DoUsePartySkill`
+   * `case ST_SPHERECIRCLE:` (`party.cpp:441-488`), which needs `m_nKindTroup`,
+   * party level, party points (`GetPoint()`/`dwExp`), `m_idSetTarget`,
+   * `m_nModeTime[PARTY_GIFTBOX_MODE|PARTY_FORTUNECIRCLE_MODE]` and `IsNearPC` --
+   * none of which exist in `PartyManager`. The consumer side is faithful, so the
+   * bonus lights up the moment a party-skill system ships.
+   */
+  m_dwFlag: number = 0;
   /** Human-NPC outfit (character.inc). Undefined for monsters -> naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
   /** character.inc AddMenu ids (MMI_*). Carries dialog/trade/bank capability. */
@@ -400,6 +425,7 @@ export class CMover {
     this.m_bGuard = src.guard ?? false;
     this.m_bChaoGuard = src.chaoGuard ?? false;
     this.m_bFlyable = src.flyable ?? false;
+    this.m_dwClass = src.rank ?? 0;
     this.outfit = src.outfit;
     this.m_abMoverMenu = src.menus ?? [];
     this.m_vendorStock = src.vendorStock ?? EMPTY_VENDOR_STOCK;

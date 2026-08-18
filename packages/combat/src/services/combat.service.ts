@@ -27,7 +27,7 @@ import type { ZoneManager } from '@flyff/world-core';
 import type { PlayerManager } from '@flyff/world-core';
 import {
   resolveMelee, xRandomRng, expLevelDiffMult, addExp,
-  type Rng, type MeleeResult,
+  type Rng, type MeleeResult, type Combatant,
 } from '../combat/formulas';
 import { resolveSkillCast } from '../combat/skillFormulas';
 import { AF_MISS, WT_RANGE_BOW, WT_RANGE } from '../combat/tables';
@@ -35,7 +35,7 @@ import { playerCombatant, moverCombatant } from '../combat/combatants';
 import type { ItemLookup } from '../combat/equipStats';
 import { CHASE_WINDOW_MS, PURSUE_SPEED_FACTOR, EXP_TABLE } from '@flyff/entities';
 import { isMoverAttackableBy, isPlayerAttackableBy } from './combat.policy';
-import { MODE } from '@flyff/entities';
+import { MODE, MVRF } from '@flyff/entities';
 import { DamageSerializer } from '../net/snapshot/damage.serializer';
 import { MoverDeathSerializer } from '../net/snapshot/moverDeath.serializer';
 import { SetExperienceSerializer } from '../net/snapshot/setExperience.serializer';
@@ -139,6 +139,14 @@ export interface CombatServiceDeps {
    * if the dead player was either master.
    */
   onWarDeath?: (victim: CPlayer) => void;
+  /**
+   * Optional party member-count lookup (wired to `partyManager.getByMember(...)
+   * ?.members.length` in `compose.ts`). Feeds the SphereCircle critical bonus
+   * `nProb += m_nSizeofMember / 2` (`GetCriticalProb`, `MoverAttack.cpp:698-707`).
+   * C++ does the `g_PartyMng` lookup inline; the seam keeps `@flyff/combat` free
+   * of a `@flyff/party` import. Absent = no bonus.
+   */
+  partySize?: (charId: number) => number;
 }
 
 /** One `m_idEnemies` row: an attacker and their cumulative recorded damage. */
@@ -187,11 +195,47 @@ export class CombatService {
     return c.weapon.type === WT_RANGE_BOW || c.weapon.type === WT_RANGE;
   }
 
+  /**
+   * Consume the one-shot `MVRF_CRITICAL` party bonus and return its probability
+   * points -- the port of the party arm of `GetCriticalProb`
+   * (`MoverAttack.cpp:697-707`):
+   *
+   * ```cpp
+   * if( m_idparty && (m_dwFlag & MVRF_CRITICAL) ) {
+   *     CParty* pParty = g_PartyMng.GetParty( m_idparty );
+   *     if( pParty && pParty->IsMember( m_idPlayer ) )
+   *         nProb += ( pParty->m_nSizeofMember / 2 );
+   *     m_dwFlag &= (~MVRF_CRITICAL);      // <- OUTSIDE the pParty guard
+   * }
+   * ```
+   *
+   * Two faithful details that look like bugs and are not: the flag is cleared
+   * even when the party lookup fails (a stale party id burns the charge), and it
+   * is consumed on the crit *roll*, not on a landed crit -- so a miss or a
+   * non-crit swing still spends it. Effective cap is +4: `MAX_PTMEMBER_SIZE_
+   * SPECIAL` = 8 gates `NewMember` (`DPCacheSrvr.cpp:826-831`).
+   */
+  private takePartyCritBonus(player: CPlayer): number {
+    if ((player.m_dwFlag & MVRF.CRITICAL) === 0) return 0;
+    let bonus = 0;
+    if (player.m_idParty !== NULL_ID) {
+      const size = this.deps.partySize?.(player.m_idPlayer) ?? 0;
+      if (size > 0) bonus = Math.floor(size / 2);
+    }
+    player.m_dwFlag &= ~MVRF.CRITICAL;
+    return bonus;
+  }
+
+  /** Attacker view with the one-shot party crit bonus folded in and consumed. */
+  private attackerCombatant(player: CPlayer): Combatant {
+    return playerCombatant(player, this.deps.getItem, this.takePartyCritBonus(player));
+  }
+
   /** Resolve a melee swing from `player` onto `targetObjid`. */
   resolveAttack(player: CPlayer, targetObjid: number): CombatOutcome {
     const t = this.resolveTarget(player, targetObjid);
     if (!t.ok) return t;
-    const attacker = playerCombatant(player, this.deps.getItem);
+    const attacker = this.attackerCombatant(player);
     const target = t.target;
     if (target.kind === 'player') {
       // PvP: defender is a live player. The 0.60 PvP damage multiplier + the
@@ -230,6 +274,9 @@ export class CombatService {
   ): CombatOutcome {
     const t = this.resolveTarget(player, targetObjid);
     if (!t.ok) return t;
+    // No party-crit consumption here: `IsCriticalAttack` returns FALSE for any
+    // skill attack BEFORE it reaches `GetCriticalProb` (`MoverAttack.cpp:800`),
+    // so a skill cast never rolls crit and never burns the one-shot flag.
     const attacker = playerCombatant(player, this.deps.getItem);
     const hits = Math.max(1, level.skillCount ?? 1);
     // C++ MoverAttack.cpp:925 -- `factor /= (float)pAddSkillProp->nSkillCount`
@@ -320,6 +367,9 @@ export class CombatService {
       attackerObjid: player.m_idPlayer,
       hit: dealt,
       atkFlags: eff.atkFlags,
+      // AF_FLYING tail: the victim's own pos/angle (C++ AddDamage, User.cpp:4477).
+      victimPos: mover.m_vPos,
+      victimAngle: mover.m_fAngle,
     });
     this.deps.zoneManager.broadcastAround(mover.m_vPos, mover.m_nZoneId, VISIBILITY_RADIUS, packet);
     const killed = mover.m_nHitPoint <= 0;
@@ -348,6 +398,8 @@ export class CombatService {
       attackerObjid: player.m_idPlayer,
       hit: dealt,
       atkFlags: eff.atkFlags,
+      victimPos: target.m_vPos,
+      victimAngle: target.m_fAngle,
     });
     this.deps.zoneManager.broadcastAround(target.m_vPos, target.m_nZoneId, VISIBILITY_RADIUS, packet);
     const killed = target.m_nHp <= 0 && !target.m_bDead;
