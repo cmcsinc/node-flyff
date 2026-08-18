@@ -17,25 +17,25 @@ import { applyDpc, calcDefense, getDamageMultiplier } from './formulas';
 import { DST } from '@flyff/entities';
 import type { SkillDefinition, SkillLevel } from '@flyff/resources';
 import {
-  AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1,
+  AF_MELEESKILL, AF_MAGICSKILL, AF_CRITICAL1, NO_PROP,
 } from './tables';
 
 /**
  * Magic skill element factor -- **separate from `ELEMENT_MATCH`**
- * (`MoverAttack.cpp:1275`). 6*6 cycle: same = 1.1, attacker beats = 0.9,
+ * (`MoverAttack.cpp:1275`). 6*6 cycle: same = 1.1, skill beats weapon = 0.9,
  * else 1.0. The cycle is 1>2, 2>3, 3>5, 5>4, 4>1 (Fire>Water>Electricity>
  * Earth>Wind>Fire). docs #4.
  *
- * Indexed as `[defenderElement][attackerElement]`. `0` (NO_PROP) is neutral
- * vs everything (factor 1.0).
+ * Both operands are the ATTACKER's: the skill's element and the attacker's
+ * WEAPON element (`GetMagicSkillFactor`, `MoverAttack.cpp:1139`). The defender
+ * plays no part -- see {@link getMagicSkillFactor}.
  *
- * Element enum (`defineAttribute.h` ST_* -> internal): MAGIC=1 (not used here),
- * FIRE=0x04->1, WATER=0x20->2, ELECTRICITY=0x02->3, WIND=0x10->4, EARTH=0x08->5
- * (v19 bit flags; see `ST_TO_INTERNAL`). We index by the 1..5 numeric element
- * id post-conversion.
+ * Element enum (`data.h:409` ePropType): NO_PROP=0, FIRE=1, WATER=2,
+ * ELECTRICITY=3, WIND=4, EARTH=5. The resource-side `ST_*` bit flags
+ * (`defineAttribute.h`: ST_FIRE=0x04, ST_WATER=0x20, ST_ELECTRICITY=0x02,
+ * ST_WIND=0x10, ST_EARTH=0x08) are converted by {@link ST_TO_INTERNAL}; the
+ * item side carries `_FIRE=1 .. _EARTH=5` already in ePropType space.
  */
-// ponytail: convert ST_* resource values to the 1..5 internal index via a
-// shared table once more than fire/water/electric/wind/earth appear.
 const MAGIC_FACTOR_BEATS: ReadonlySet<string> = new Set([
   '1>2', // Fire beats Water
   '2>3', // Water beats Electricity
@@ -44,10 +44,22 @@ const MAGIC_FACTOR_BEATS: ReadonlySet<string> = new Set([
   '4>1', // Wind beats Fire
 ]);
 
-/** Resolve the magic-skill factor for attacker/defender elements (1..5). */
-export function getMagicSkillFactor(atkElement: number, defElement: number): number {
-  if (atkElement === defElement) return 1.1;
-  const key = `${String(atkElement)}>${String(defElement)}`;
+/**
+ * Resolve the magic-skill factor from the SKILL element vs the ATTACKER'S
+ * WEAPON element (both ePropType 1..5, `0` = NO_PROP).
+ *
+ * `CMover::GetMagicSkillFactor` (`MoverAttack.cpp:1139-1167`) reads
+ * `GetWeaponItem()->m_bItemResist`, falling back to
+ * `GetActiveHandItemProp()->eItemType`, and returns `1.0f` outright when the
+ * attacker holds nothing. The defender's element is NOT an input -- it only
+ * feeds `GetResist(skillType)` one line earlier. So this is a wand/staff
+ * synergy bonus, not an elemental weakness table: a fire wand casting fire
+ * gets 1.1, a fire wand casting water gets 0.9, bare hands always 1.0.
+ */
+export function getMagicSkillFactor(skillElement: number, weaponElement: number): number {
+  if (weaponElement === NO_PROP) return 1.0; // no weapon prop -> C++ returns 1.0f
+  if (skillElement === weaponElement) return 1.1;
+  const key = `${String(skillElement)}>${String(weaponElement)}`;
   if (MAGIC_FACTOR_BEATS.has(key)) return 0.9;
   return 1.0;
 }
@@ -145,22 +157,24 @@ export function getMagicSkillPower(
 }
 
 /**
- * `PostCalcMagicSkill` (`MoverAttack.cpp:1096`) -- magic-specific defense path.
+ * `PostCalcMagicSkill` (`MoverAttack.cpp:1171`) -- magic-specific defense path.
  *
  * ```
  * nDEF = defender.CalcDefense                  // same as melee
  * nATK -= nATK * GetParam(DST_RESIST_MAGIC_RATE)/100   // v1: 0
- * a = (nATK - nDEF) * (1 - GetResist(skillElement))    // v1: 0
- * return a * GetMagicSkillFactor(defender, skillElement)
+ * a = (nATK - nDEF) * (1 - GetResist(skillElement))    // defender elem resist
+ * return (int)((int)a * GetMagicSkillFactor(pDefender, skillType))
  * ```
  *
- * v1: RESIST_MAGIC_RATE=0, defender elemental resist=0 -> straight subtraction
- * + element cycle factor.
+ * `GetMagicSkillFactor` takes `pDefender` but never reads it -- the factor is
+ * skill-element vs **attacker weapon** element. `attacker` is therefore the
+ * operand that matters here; `defender` only supplies DEF and resist.
  *
  * Returns final damage (>=0).
  */
 export function postCalcMagicSkill(
   nATK: number,
+  attacker: Combatant,
   defender: Combatant,
   defenderDef: number,
   skillElement: number,
@@ -173,9 +187,12 @@ export function postCalcMagicSkill(
   // (1 - GetResist(skillElement)) -- defender elemental resist via DST_RESIST_<elem>.
   const elemResist = getResist(defender, skillElement);
   if (elemResist > 0) a = a * (1 - elemResist / 100);
-  const internalElem = ST_TO_INTERNAL.get(skillElement) ?? 0;
-  const defInternal = ST_TO_INTERNAL.get(defender.element) ?? 0;
-  const factor = internalElem > 0 ? getMagicSkillFactor(internalElem, defInternal) : 1.0;
+  const internalElem = ST_TO_INTERNAL.get(skillElement) ?? NO_PROP;
+  // The weapon element is already in ePropType space (`_FIRE=1 .. _EARTH=5`)
+  // via `elementFromName`, so it needs no ST_* conversion.
+  const factor = internalElem !== NO_PROP
+    ? getMagicSkillFactor(internalElem, attacker.weapon.element)
+    : 1.0;
   return Math.floor(a * factor);
 }
 
@@ -306,7 +323,9 @@ export function resolveSkillCast(input: SkillCastInputs): SkillCastResult {
   // equip-DEF roll per hit, exactly as the generic melee path does.
   let nDamage: number;
   if (isMagic) {
-    nDamage = postCalcMagicSkill(nATK, defender, calcDefense(defender), skill.element ?? 0);
+    nDamage = postCalcMagicSkill(
+      nATK, attacker, defender, calcDefense(defender), skill.element ?? 0,
+    );
   } else {
     const dpc = applyDpc({
       attacker, defender, rng, nATK, atkFlags, skillId: skill.id, chargeLevel: 0,

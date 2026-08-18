@@ -127,11 +127,36 @@ All 6 domains audited against `game/source/` C++ spec. Findings listed by severi
   `<= 9` flat `*0.6`.
 - 2 new test cases (own-coefficient check + `MIN_HR` floor against a far higher-level player).
 
-### C5. Magic element factor compares wrong elements — skill vs defender instead of skill vs weapon
-- **File**: `packages/combat/src/combat/skillFormulas.ts:176-178`
-- **TS**: compares skill element vs **defender's** element → fire spell vs fire monster gets 1.1x
-- **C++** (`MoverAttack.cpp:1140-1169`): compares skill element vs **attacker's weapon** element → fire wand casting fire spell gets 1.1x synergy
-- **Impact**: Every magic skill's element factor applied to wrong target. The `Combatant` interface has no weapon-element field for the attacker in the magic skill path.
+### ~~C5. Magic element factor compares wrong elements — skill vs defender instead of skill vs weapon~~ ✅ Resolved (2026-08-18)
+- **File**: `packages/combat/src/combat/skillFormulas.ts`
+- The row was accurate. `CMover::GetMagicSkillFactor` (`MoverAttack.cpp:1139-1167`) takes a
+  `pDefender` parameter and **never reads it**: it resolves `itemType` from
+  `GetWeaponItem()->m_bItemResist`, falls back to `GetActiveHandItemProp()->eItemType`, and
+  `return 1.0f` outright when the attacker holds no item prop. The comparison is
+  skill-element vs **attacker weapon** element — a wand/staff synergy bonus, not an elemental
+  weakness table. The defender's element enters `PostCalcMagicSkill` only via
+  `GetResist(skillType)` (`:1201`), which reads `DST_RESIST_<elem>` params, not `m_nElement`.
+- **Fixed**: `getMagicSkillFactor(skillElement, weaponElement)` now takes the attacker's
+  weapon element and short-circuits to `1.0` on `NO_PROP`; `postCalcMagicSkill` gained an
+  `attacker` parameter and reads `attacker.weapon.element`. The defender still supplies DEF
+  and `DST_RESIST_*`.
+- **Element spaces do not match and must not be conflated.** The skill side is `dwSpellType`,
+  an `ST_*` **bit flag** (`defineAttribute.h`: `ST_FIRE 0x04`, `ST_WATER 0x20`,
+  `ST_ELECTRICITY 0x02`, `ST_WIND 0x10`, `ST_EARTH 0x08`), converted through
+  `ST_TO_INTERNAL`. The item/weapon side is `eItemType`, already sequential `ePropType`
+  (`data.h:409` / `defineAttribute.h` `_FIRE 1 … _EARTH 5`) and produced by
+  `elementFromName` — so it takes no conversion. Verified against `propSkill.txt` col 32
+  (`eItemType`) vs col 90 (`dwSpellType`): every elementor attack carries e.g. `_FIRE` +
+  `ST_FIRE` as a matched pair.
+- **Observable change**: a bare-handed or non-elemental caster now gets factor `1.0` where the
+  old model gave `1.1` against a same-element monster (Flame Ball L1: 278 instead of 305), and
+  a fire wand earns `1.1` on a fire spell regardless of what it is hitting.
+- **Multi-element skills stay neutral.** `SI_ELE_MULTY_*` carry combined flags
+  (`ST_FIREEARTH`, `ST_ELECWIND`, …) with `eItemType = _NONE`; those miss `ST_TO_INTERNAL` and
+  fall through to `1.0`, matching the C++ where `skillType` never equals a single-element
+  `itemType`.
+- The `skillFormulas.test.ts` case that had a `ponytail:` pinning the old defender-based model
+  is rewritten; 2 cases added (no-weapon → 1.0, defender-element invariance).
 
 ### C6. Recovery uses raw m_nSta/m_nInt, not DST-adjusted
 - **File**: `packages/world-server/src/systems/recovery.system.ts:106`

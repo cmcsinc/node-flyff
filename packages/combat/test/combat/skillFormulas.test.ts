@@ -111,15 +111,22 @@ async function loadSkill(id: number): Promise<SkillDefinition> {
 }
 
 describe('getMagicSkillFactor', () => {
-  it('same element = 1.1, beats = 0.9, else 1.0', () => {
-    assert.equal(getMagicSkillFactor(1, 1), 1.1);          // Fire vs Fire
-    assert.equal(getMagicSkillFactor(1, 2), 0.9);          // Fire beats Water
-    assert.equal(getMagicSkillFactor(2, 3), 0.9);          // Water beats Electricity
-    assert.equal(getMagicSkillFactor(3, 5), 0.9);          // Electricity beats Earth
-    assert.equal(getMagicSkillFactor(5, 4), 0.9);          // Earth beats Wind
-    assert.equal(getMagicSkillFactor(4, 1), 0.9);          // Wind beats Fire
-    assert.equal(getMagicSkillFactor(1, 3), 1.0);          // Fire vs Electricity (no cycle)
-    assert.equal(getMagicSkillFactor(2, 1), 1.0);          // Water vs Fire (reverse cycle)
+  // Both operands are the ATTACKER's: (skillElement, weaponElement).
+  // `GetMagicSkillFactor` (MoverAttack.cpp:1139) never reads pDefender.
+  it('same element = 1.1, skill beats weapon = 0.9, else 1.0', () => {
+    assert.equal(getMagicSkillFactor(1, 1), 1.1);          // Fire skill, fire wand
+    assert.equal(getMagicSkillFactor(1, 2), 0.9);          // Fire skill, water wand
+    assert.equal(getMagicSkillFactor(2, 3), 0.9);          // Water skill, electric wand
+    assert.equal(getMagicSkillFactor(3, 5), 0.9);          // Electric skill, earth wand
+    assert.equal(getMagicSkillFactor(5, 4), 0.9);          // Earth skill, wind wand
+    assert.equal(getMagicSkillFactor(4, 1), 0.9);          // Wind skill, fire wand
+    assert.equal(getMagicSkillFactor(1, 3), 1.0);          // Fire skill, electric wand
+    assert.equal(getMagicSkillFactor(2, 1), 1.0);          // Water skill, fire wand
+  });
+
+  it('no weapon element = 1.0 (C++ returns 1.0f with no item prop)', () => {
+    assert.equal(getMagicSkillFactor(1, 0), 1.0);
+    assert.equal(getMagicSkillFactor(0, 0), 1.0);
   });
 });
 
@@ -145,17 +152,48 @@ describe('getMagicSkillPower — Flame Ball L1 (real data)', () => {
   });
 });
 
+/** Attacker holding a wand whose element is `el` (ePropType 1..5, 0 = none). */
+function makeWandAttacker(el: number): Combatant {
+  return makeAttacker({
+    weapon: { min: 0, max: 0, type: 0, atkSpeed: 0.4, option: 0, element: el },
+  });
+}
+
 describe('postCalcMagicSkill', () => {
-  it('subtracts defender DEF and applies element factor', () => {
-    // v19 ST_* are bit flags: ST_FIRE=0x04, ST_WATER=0x20.
-    // nATK=281, nDEF=3, no defender element → factor 1.0 → 278
-    assert.equal(postCalcMagicSkill(281, makeNpcDefender(), 3, 0x04), 278);
-    // Same element (FIRE vs FIRE defender) → factor 1.1
-    assert.equal(postCalcMagicSkill(100, makeNpcDefender({ element: 0x04 }), 10, 0x04), Math.floor(90 * 1.1));
-    // Fire beats Water defender → factor 0.9
-    assert.equal(postCalcMagicSkill(100, makeNpcDefender({ element: 0x20 }), 10, 0x04), Math.floor(90 * 0.9));
+  it('subtracts defender DEF and applies the attacker-weapon element factor', () => {
+    // Skill element is an ST_* bit flag (ST_FIRE=0x04); the weapon element is
+    // already ePropType (FIRE=1, WATER=2).
+    // nATK=281, nDEF=3, bare hands → factor 1.0 → 278
+    assert.equal(postCalcMagicSkill(281, makeAttacker(), makeNpcDefender(), 3, 0x04), 278);
+    // Fire skill from a FIRE wand → 1.1 synergy
+    assert.equal(
+      postCalcMagicSkill(100, makeWandAttacker(1), makeNpcDefender(), 10, 0x04),
+      Math.floor(90 * 1.1),
+    );
+    // Fire skill from a WATER wand → 0.9 (skill beats weapon in the cycle)
+    assert.equal(
+      postCalcMagicSkill(100, makeWandAttacker(2), makeNpcDefender(), 10, 0x04),
+      Math.floor(90 * 0.9),
+    );
     // ATK below DEF clamps to 0
-    assert.equal(postCalcMagicSkill(2, makeNpcDefender(), 3, 0x04), 0);
+    assert.equal(postCalcMagicSkill(2, makeAttacker(), makeNpcDefender(), 3, 0x04), 0);
+  });
+
+  it('ignores the DEFENDER element entirely (MoverAttack.cpp:1139)', () => {
+    // A fire spell into a fire monster is NOT 1.1x -- the old model read the
+    // defender here. Only GetResist(skillType) consults the defender, and an
+    // NPC with no DST_RESIST_FIRE resists nothing.
+    const fireDefender = makeNpcDefender({ element: 0x04 });
+    assert.equal(
+      postCalcMagicSkill(100, makeAttacker(), fireDefender, 10, 0x04),
+      90,
+      'bare-hands caster: factor stays 1.0 regardless of defender element',
+    );
+    assert.equal(
+      postCalcMagicSkill(100, makeWandAttacker(1), fireDefender, 10, 0x04),
+      postCalcMagicSkill(100, makeWandAttacker(1), makeNpcDefender({ element: 0x20 }), 10, 0x04),
+      'same wand + skill → same factor whatever the defender is',
+    );
   });
 });
 
@@ -203,22 +241,35 @@ describe('resolveSkillCast', () => {
     assert.equal(result.atkFlags & AF_MELEESKILL, 0, 'AF_MELEESKILL not set');
   });
 
-  it('Flame Ball L1 vs FIRE defender applies 1.1 same-element factor', async () => {
+  it('Flame Ball L1 from a FIRE wand applies the 1.1 same-element factor', async () => {
     const skill = await loadSkill(64);
     const level = skill.levels[0]!;
-    // v19 defineAttribute.h encodes ST_* as bit flags; Flame Ball's dwSpellType
-    // resolves to ST_FIRE = 0x04. Defender uses the same ST_* encoding here.
-    // ponytail: C++ GetMagicSkillFactor (MoverAttack.cpp:1140) actually compares
-    // skillType vs the ATTACKER'S WEAPON element, not the defender -- the
-    // emulator compares vs defender. That model divergence is unresolved; this
-    // test pins the emulator's current behavior, not C++ truth.
+    // Flame Ball's dwSpellType resolves to ST_FIRE = 0x04 (v19 bit flag).
+    // The factor is skill-element vs the ATTACKER'S WEAPON element
+    // (`GetMagicSkillFactor`, MoverAttack.cpp:1139 reads `GetWeaponItem()->
+    // m_bItemResist` / `GetActiveHandItemProp()->eItemType`), so a fire wand is
+    // what earns the bonus -- the defender's element is never consulted.
     const result = resolveSkillCast({
-      attacker: makeAttacker({ int: 15 }),
-      defender: makeNpcDefender({ element: 0x04 }), // ST_FIRE v19
+      attacker: makeAttacker({
+        int: 15,
+        weapon: { min: 0, max: 0, type: 0, atkSpeed: 0.4, option: 0, element: 1 }, // FIRE
+      }),
+      defender: makeNpcDefender({ element: 0x20 }), // ST_WATER -- irrelevant
       skill, level, rng: minRng,
     });
     // nATK=281, nDEF=3 → 278; factor 1.1 → 305 (floor)
     assert.equal(result.damage, Math.floor(278 * 1.1));
+  });
+
+  it('Flame Ball L1 bare-handed gets no factor even against a FIRE defender', async () => {
+    const skill = await loadSkill(64);
+    const level = skill.levels[0]!;
+    const result = resolveSkillCast({
+      attacker: makeAttacker({ int: 15 }), // weapon element 0 -> C++ returns 1.0f
+      defender: makeNpcDefender({ element: 0x04 }), // ST_FIRE
+      skill, level, rng: minRng,
+    });
+    assert.equal(result.damage, 278, 'factor 1.0 -- the old model gave 305 here');
   });
 
   it('Clean Hit: effectProc defaults true when skill has no nProbability', async () => {
