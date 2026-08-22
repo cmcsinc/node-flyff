@@ -39,7 +39,15 @@
       "Bash(pnpm test:core)",
       "Bash(pnpm test:database)",
       "Bash(xargs -0 rm -f)",
-      "Bash(git reset:*)"
+      "Bash(git reset:*)",
+      "Bash(sed 's/^[0-9.]* //')",
+      "Read(//tmp/**)",
+      "Bash(sed -i \"s|const root = '/d/Cyan/.claude/projects';|const root = 'D:\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\Cyan\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\.claude\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\projects';|\" scan.mjs)",
+      "Read(//d/Cyan/.claude/plugins//**)",
+      "Read(//d/Cyan/.claude/plugins/repos//**)",
+      "Read(//d/Cyan/.local/bin/**)",
+      "Read(//d/Cyan/.claude/**)",
+      "WebFetch(domain:downloads.claude.ai)"
     ]
   }
 }
