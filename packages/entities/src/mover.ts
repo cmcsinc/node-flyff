@@ -275,7 +275,7 @@ export class CMover {
    * none of which exist in `PartyManager`. The consumer side is faithful, so the
    * bonus lights up the moment a party-skill system ships.
    */
-  m_dwFlag: number = 0;
+  m_dwFlag = 0;
   /** Human-NPC outfit (character.inc). Undefined for monsters -> naked spawn. */
   readonly outfit?: MoverOutfit | undefined;
   /** character.inc AddMenu ids (MMI_*). Carries dialog/trade/bank capability. */

@@ -297,7 +297,7 @@ export class CPlayer {
    * party level/points, `m_idSetTarget`, `m_nModeTime[...]` and `IsNearPC`, none
    * of which exist in `PartyManager`. The consumer side is faithful.
    */
-  m_dwFlag: number = 0;
+  m_dwFlag = 0;
   /**
    * Guild id this player belongs to (C++ `CMover::m_idGuild`), or {@link NULL_ID}
    * when guildless. The roster lives in `GuildManager`; this is the per-player
