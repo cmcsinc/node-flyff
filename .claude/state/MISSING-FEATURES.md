@@ -1,5 +1,11 @@
 # Flyff v19 — Missing Features Checklist
 
+> **Ordering layer:** this file answers *what* is missing. For *in what order* —
+> the nine dependency roots, which features block which, and the 13 inert
+> "already built, just unwired" fixes — see
+> [`FEATURE-DEPENDENCIES.md`](FEATURE-DEPENDENCIES.md) (2026-08-22, master
+> `8792943`).
+
 > **Fidelity audit (2026-07-27):** All 64 TS↔C++ behavioral deviations found in
 > the C++ fidelity audit (`docs/c++-fidelity-audit.md`) have been resolved. This
 > checklist covers features not yet ported at all (wider scope).
