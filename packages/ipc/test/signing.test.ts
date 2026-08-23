@@ -90,9 +90,12 @@ describe('signing', () => {
     assert.strictEqual(isValid, false);
   });
 
-  it('should accept messages exactly 30 seconds old', () => {
+  it('should accept messages just inside the 30 second window', () => {
     const payload = { charId: 123 };
-    const ts = Date.now() - 30_000; // Exactly 30 seconds ago
+    // 29 s, not exactly 30 s: verifyIpcMessage re-reads Date.now(), so a ts of
+    // `now - 30_000` ages past the `age > 30_000` cut the moment a single ms
+    // elapses between signing and verifying -- a wall-clock flake in CI.
+    const ts = Date.now() - 29_000;
     const sig = signIpcMessage(secret, payload, serverId, ts);
 
     const isValid = verifyIpcMessage(secret, payload, sig, serverId, ts);

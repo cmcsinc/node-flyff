@@ -42,7 +42,11 @@ function fakeManager(player: CPlayer): { mgr: PlayerManager; sent: Sent[] } {
 
 describe('RecoverySystem', () => {
   it('regenerates HP/MP/FP on the first tick (m_tmNextRecovery starts at 0)', () => {
-    const player = CPlayer.fromRow(makeRow({ hp: 100, mp: 40 }), { write: () => true });
+    // Level 10, not 1: at level 1 the faithful formulas floor MP/FP regen to 0
+    // (`GetMPRecovery` MoverParam.cpp:3162 -> int(1.8) = 1, then the v9 10%
+    // shave -> int(0.9) = 0). Level 10 is the lowest tested point where all
+    // three vitals actually move, so the three-SETPOINTPARAM assert holds.
+    const player = CPlayer.fromRow(makeRow({ level: 10, hp: 100, mp: 40 }), { write: () => true });
     const before = { hp: player.m_nHp, mp: player.m_nMp, fp: player.m_nFp };
     const { mgr, sent } = fakeManager(player);
     const sys = new RecoverySystem({ playerManager: mgr });
